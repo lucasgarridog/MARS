@@ -1,7 +1,7 @@
 ### INITIALIZATION ###
+from Fits import *
+from CompassLoader import *
 import sys
-import numpy as np
-import matplotlib.pyplot as plt
 from matplotlib import rc
 rc("text", usetex=True)
 plt.rcParams['font.family'] = 'serif'
@@ -10,17 +10,14 @@ plt.rcParams['lines.linewidth'] = 2.5
 plt.rcParams['figure.figsize'] = (8, 5)
 np.set_printoptions(threshold=sys.maxsize)
 
-from Fits import *
-from CompassLoader import *
-
 # Code used to analyze the effect of changing some parameters
 # of the trapezoid filter in COMPASS
 
 ### CODE ###
 # Data loading
 folder = r"C:\Users\Lucas Garrido\Documents\PhD\Measurements\Trapezoid_tests"
-runs = range(1,15)
-data = np.zeros((2,4095,14))
+runs = range(1,15)                                          # there are 14 runs
+data = np.zeros((2,4095,14))                                # 2 lines (x,y) and 4095 channels
 for run in runs:
     data[:,:,run-1] = CompassLoader(folder + "\HcompassF_run_" + str(run) + "_20220316.root")
 
