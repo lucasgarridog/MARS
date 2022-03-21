@@ -35,20 +35,20 @@ for run in runs:
 
 # Plots
 # Reference plot
-plt.step(range(len(ref)), ref, color="tab:blue")
-plt.fill_between(range(len(ref)), ref, color="tab:blue", step="pre")
-plt.plot(range(len(ref)), Gaussian(range(len(ref)), ref_fit.get("amplitude")[0,0], ref_fit.get("mean")[0,0], ref_fit.get("sigma")[0,0]), color="tab:red")
-plt.plot(range(len(ref)), Gaussian(range(len(ref)), ref_fit.get("amplitude")[1,0], ref_fit.get("mean")[1,0], ref_fit.get("sigma")[1,0]), color="tab:red")
-plt.plot(range(len(ref)), Gaussian(range(len(ref)), ref_fit.get("amplitude")[2,0], ref_fit.get("mean")[2,0], ref_fit.get("sigma")[2,0]), color="tab:red")
-plt.text(537, 1500, str(round(ref_fit.get("R[%]")[0,0],2)) + "\%")
-plt.text(564, 1600, str(round(ref_fit.get("R[%]")[1,0],2)) + "\%")
-plt.text(591, 650, str(round(ref_fit.get("R[%]")[2,0],2)) + "\%")
-plt.xlabel("ADC Channel")
-plt.ylabel("Counts")
-plt.title("Simulated spectrum")
-plt.xlim(520,600)
-plt.ylim(0)
-plt.show()
+# plt.step(range(len(ref)), ref, color="tab:blue")
+# plt.fill_between(range(len(ref)), ref, color="tab:blue", step="pre")
+# plt.plot(range(len(ref)), Gaussian(range(len(ref)), ref_fit.get("amplitude")[0,0], ref_fit.get("mean")[0,0], ref_fit.get("sigma")[0,0]), color="tab:red")
+# plt.plot(range(len(ref)), Gaussian(range(len(ref)), ref_fit.get("amplitude")[1,0], ref_fit.get("mean")[1,0], ref_fit.get("sigma")[1,0]), color="tab:red")
+# plt.plot(range(len(ref)), Gaussian(range(len(ref)), ref_fit.get("amplitude")[2,0], ref_fit.get("mean")[2,0], ref_fit.get("sigma")[2,0]), color="tab:red")
+# plt.text(537, 1500, str(round(ref_fit.get("R[%]")[0,0],2)) + "\%")
+# plt.text(564, 1600, str(round(ref_fit.get("R[%]")[1,0],2)) + "\%")
+# plt.text(591, 650, str(round(ref_fit.get("R[%]")[2,0],2)) + "\%")
+# plt.xlabel("ADC Channel")
+# plt.ylabel("Counts")
+# plt.title("Simulated spectrum")
+# plt.xlim(520,600)
+# plt.ylim(0)
+# plt.show()
 
 # Changing rise time (runs 1 - 3)
 f, ax = plt.subplots(1, 3, figsize=(16,8))
@@ -252,7 +252,7 @@ while i < 3:
     resolutions.append([R[0][i][0], R[1][i][0], R[2][i][0], R[3][i][0], R[4][i][0], R[5][i][0], R[6][i][0], R[7][i][0], R[8][i][0], R[10][i][0], R[11][i][0], R[12][i][0], R[13][i][0]])
     i = i + 1
 
-x = [str(1),str(2),str(3),str(4),str(5),str(6),str(7),str(9),str(10),str(11),str(12),str(13),str(14)]
+x = [str(1),str(2),str(3),str(4),str(5),str(6),str(7),str(8),str(9),str(11),str(12),str(13),str(14)]
 aux = np.arange(13)
 
 f = plt.figure(figsize=(16,8))
