@@ -23,6 +23,7 @@ for run in runs:
     data[:,:,run-1] = CompassLoader(folder + "\HcompassF_run_" + str(run) + "_20220316.root")
 
 ref = np.loadtxt(folder + "/triple_alpha.txt")              # this is the spectrum i emulated
+x_ref = range(len(ref))
 
 # Calibration of each run (except 10, which is a mess)
 energies = [5156.59, 5485.56, 5804.82]
@@ -33,6 +34,8 @@ for run in runs:
     fit, calibrated_x = SpectraCalibrator(data[0,:,run-1], data[1,:,run-1], energies)
     data_calibrated[0,:,run - 1] = calibrated_x
 
+_, calibrated_ref = SpectraCalibrator(x_ref, ref, energies, plot=False)
+
 # Data analysis (except 10, which is a mess)
 params = []
 R = []
@@ -40,6 +43,24 @@ for run in runs:
     fit = Gaussian_fit_spectra(data_calibrated[0,:,run-1], data_calibrated[1,:,run-1], plot=False)
     params.append(fit)
     R.append(fit.get("R[%]"))
+
+# ref_fit = Gaussian_fit_spectra(calibrated_ref, ref, plot=False)    # solo funciona cambiando en Fits.py el y/2
+# print(ref_fit)
+# plt.step(calibrated_ref, ref, color="tab:blue")
+# plt.fill_between(calibrated_ref, ref, color="tab:blue", step="pre")
+# plt.plot(calibrated_ref, Gaussian(calibrated_ref, ref_fit.get("amplitude")[0,0], ref_fit.get("mean")[0,0], ref_fit.get("sigma")[0,0]), color="tab:red")
+# plt.plot(calibrated_ref, Gaussian(calibrated_ref, ref_fit.get("amplitude")[1,0], ref_fit.get("mean")[1,0], ref_fit.get("sigma")[1,0]), color="tab:red")
+# plt.plot(calibrated_ref, Gaussian(calibrated_ref, ref_fit.get("amplitude")[2,0], ref_fit.get("mean")[2,0], ref_fit.get("sigma")[2,0]), color="tab:red")
+# plt.text(5200, 1500, str(round(ref_fit.get("R[%]")[0,0],2)) + "\%")
+# plt.text(5500, 1600, str(round(ref_fit.get("R[%]")[1,0],2)) + "\%")
+# plt.text(5820, 650, str(round(ref_fit.get("R[%]")[2,0],2)) + "\%")
+# plt.xlabel("Energy (keV)")
+# plt.ylabel("Counts")
+# plt.title("Simulated spectrum")
+# plt.xlim(5000,6000)
+# plt.ylim(0)
+# plt.show()
+
 
 # Changing rise time (runs 1 - 3)
 f, ax = plt.subplots(1, 3, figsize=(16,8))
@@ -77,9 +98,9 @@ ax[0].ticklabel_format(axis="y", style="sci", scilimits=(3,3))
 ax[1].ticklabel_format(axis="y", style="sci", scilimits=(3,3))
 ax[2].ticklabel_format(axis="y", style="sci", scilimits=(3,3))
 ax[0].set_ylabel("Counts")
-ax[0].set_xlabel("ADC Channel")
-ax[1].set_xlabel("ADC Channel")
-ax[2].set_xlabel("ADC Channel")
+ax[0].set_xlabel("Energy (keV)")
+ax[1].set_xlabel("Energy (keV)")
+ax[2].set_xlabel("Energy (keV)")
 ax[0].set_title("Rise time = 0.016 $\mu$s")
 ax[1].set_title("Rise time = 0.032 $\mu$s")
 ax[2].set_title("Rise time = 0.064 $\mu$s")
@@ -126,7 +147,7 @@ ax[1,0].set_ylim(0)
 ax[1,0].set_xlim(4200,6200)
 ax[1,0].ticklabel_format(axis="y", style="sci", scilimits=(3,3))
 ax[1,0].set_ylabel("Counts")
-ax[1,0].set_xlabel("ADC Channel")
+ax[1,0].set_xlabel("Energy (keV)")
 ax[1,0].set_title("Flat top = 0.016 $\mu$s")
 ax[1,1].step(data_calibrated[0,:,7], data_calibrated[1,:,7], color="tab:blue")
 ax[1,1].plot(data_calibrated[0,:,7], Gaussian(data_calibrated[0,:,7], params[7].get("amplitude")[0,0], params[7].get("mean")[0,0], params[7].get("sigma")[0,0]), color="tab:red")
@@ -137,7 +158,7 @@ ax[1,1].set_ylim(0)
 ax[1,1].set_xlim(4200,6200)
 ax[1,1].ticklabel_format(axis="y", style="sci", scilimits=(3,3))
 ax[1,1].set_ylabel("Counts")
-ax[1,1].set_xlabel("ADC Channel")
+ax[1,1].set_xlabel("Energy (keV)")
 ax[1,1].set_title("Flat top = 0.016 $\mu$s")
 ax[1,2].step(data_calibrated[0,:,8], data_calibrated[1,:,8], color="tab:blue")
 ax[1,2].plot(data_calibrated[0,:,8], Gaussian(data_calibrated[0,:,8], params[8].get("amplitude")[0,0], params[8].get("mean")[0,0], params[8].get("sigma")[0,0]), color="tab:red")
@@ -148,7 +169,7 @@ ax[1,2].set_ylim(0)
 ax[1,2].set_xlim(4200,6200)
 ax[1,2].ticklabel_format(axis="y", style="sci", scilimits=(3,3))
 ax[1,2].set_ylabel("Counts")
-ax[1,2].set_xlabel("ADC Channel")
+ax[1,2].set_xlabel("Energy (keV)")
 ax[1,2].set_title("Flat top = 2 $\mu$s")
 ax[0,0].text(5200, 3200, str(round(R[3][0][0],2)) + "\%")
 ax[0,0].text(5500, 2200, str(round(R[3][1][0],2)) + "\%")
@@ -224,6 +245,8 @@ ax[1,0].text(5820, 900, str(round(R[12][2][0],2)) + "\%")
 ax[1,1].text(5200, 1500, str(round(R[13][0][0],2)) + "\%")
 ax[1,1].text(5500, 1300, str(round(R[13][1][0],2)) + "\%")
 ax[1,1].text(5820, 600, str(round(R[13][2][0],2)) + "\%")
+ax[1,0].set_xlabel("Energy (keV)")
+ax[1,1].set_xlabel("Energy (keV)")
 plt.suptitle("Runs 11-14")
 
 # Bar plot
