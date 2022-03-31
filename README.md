@@ -5,3 +5,5 @@ TrapezoidParametersAnalysis & TrapezoidParametersAnalysis_Calibrated do not make
 PSDTest & PHATest are the code used to analyze the first measurements with the corresponding firmware.
 
 PHAGain & PHAChannels study the system resolution when changing the gain / number of channels.
+
+PHALineal studies the linearity of MARS' channels.
